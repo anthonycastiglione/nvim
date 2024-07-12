@@ -65,6 +65,8 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
+    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i','c'}),
+    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i','c'}),
     ['<CR>'] = cmp.mapping.confirm({select = true}), -- Allow Enter to select completion, automatically select the first entry
     ["<Tab>"] = cmp.mapping(function(fallback) -- Allow Tab to go to the next autocompleted function signature attribute
       if cmp.visible() then
@@ -88,6 +90,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' }, -- For luasnip users.
+    { name = 'treesitter' },
   })
 })
 
