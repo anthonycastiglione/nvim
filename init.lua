@@ -190,23 +190,15 @@ require('telescope').setup{
 
 -- Set up and document custom keymaps
 local wk = require("which-key")
-wk.register({
-  a = {
-    name = "live grep", -- optional group name
-    w = { "<cmd>Telescope live_grep <cr>", "Live Grep" }, -- create a binding with label
-    },
-  b = {
-    name = "buffer",
-    e = { "<cmd>Telescope buffers<cr>", "Buffer Explorer" }, 
-  },
-  f = {
-    name = "find",
-    h = { "<cmd>Telescope help_tags<cr>", "Help Tags" },
-  },
-  n = {
-    name = "nvim-tree-shortcuts, highlight",
-    t = { "<cmd>NvimTreeToggle<cr>", "NvimTree" },
-    f = { "<cmd>NvimTreeFindFile<cr>", "NvimTreeFindFile" },
-    h = { "<cmd>nohlsearch<cr>", "nohlsearch" }
-  },
-}, { prefix = "<leader>" })
+wk.add({
+  { "<leader>a", group = "live grep" },
+  { "<leader>aw", "<cmd>Telescope live_grep <cr>", desc = "Live Grep" },
+  { "<leader>b", group = "buffer" },
+  { "<leader>be", "<cmd>Telescope buffers<cr>", desc = "Buffer Explorer" },
+  { "<leader>f", group = "find" },
+  { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help Tags" },
+  { "<leader>n", group = "nvim-tree-shortcuts, highlight" },
+  { "<leader>nf", "<cmd>NvimTreeFindFile<cr>", desc = "NvimTreeFindFile" },
+  { "<leader>nh", "<cmd>nohlsearch<cr>", desc = "nohlsearch" },
+  { "<leader>nt", "<cmd>NvimTreeToggle<cr>", desc = "NvimTree" },
+})
