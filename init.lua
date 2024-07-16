@@ -176,7 +176,13 @@ vim.cmd[[colorscheme tokyonight-night]]
 vim.keymap.set("n", "<leader>t", [[:Telescope find_files<CR>]])
 
 require('telescope').setup{
+  pickers = {
+    find_files = {
+      hidden = true
+    }
+  },
   defaults = {
+    file_ignore_patterns = {".git/"},
     mappings = {
       n = {
     	  ['<C-d>'] = require('telescope.actions').delete_buffer
