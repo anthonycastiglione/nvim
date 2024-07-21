@@ -172,6 +172,20 @@ format_on_save.setup({
 -- colorscheme
 vim.cmd[[colorscheme tokyonight-night]]
 
+require('lint').linters_by_ft = {
+  go = {'golangcilint',}
+}
+
+vim.api.nvim_create_autocmd({ "BufModifiedSet", "BufEnter" }, {
+  callback = function()
+
+    -- try_lint without arguments runs the linters defined in `linters_by_ft`
+    -- for the current filetype
+    require("lint").try_lint()
+  end,
+})
+
+
 -- I don't know how to do this in whichkey register
 vim.keymap.set("n", "<leader>t", [[:Telescope find_files<CR>]])
 
