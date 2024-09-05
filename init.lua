@@ -50,7 +50,7 @@ end)
 -- luasnip setup
 require("luasnip.loaders.from_vscode").lazy_load()
 
--- nvim-cmp autocomplete 
+-- nvim-cmp autocomplete
 local cmp = require('cmp')
 local luasnip = require("luasnip")
 cmp.setup({
@@ -135,6 +135,9 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
+-- Associate certain non-.rb files that are still ruby files to the ruby filetype
+vim.api.nvim_command('au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru,*.thor} set ft=ruby')
+
 -- configure format on save specifically including goimports
 local format_on_save = require("format-on-save")
 local formatters = require("format-on-save.formatters")
@@ -208,11 +211,26 @@ require('telescope').setup{
   },
 }
 
+local config = { -- Specify configuration
+  go_test_args = {
+    "-v",
+  },
+}
+-- Set up neotest with the rspec plugin
+require("neotest").setup({
+  adapters = {
+    require("neotest-rspec"),
+    require("neotest-golang")(config),
+    -- require("neotest-golang"),
+  },
+})
+
 -- Set up and document custom keymaps
 local wk = require("which-key")
 wk.add({
   { "<leader>a", group = "live grep" },
   { "<leader>aw", "<cmd>Telescope live_grep <cr>", desc = "Live Grep" },
+  { "<leader>aa", "<cmd>BlameToggle <cr>", desc = "Toggle Git Blame" },
   { "<leader>b", group = "buffer" },
   { "<leader>be", "<cmd>Telescope buffers<cr>", desc = "Buffer Explorer" },
   { "<leader>f", group = "find" },
@@ -221,4 +239,26 @@ wk.add({
   { "<leader>nf", "<cmd>NvimTreeFindFile<cr>", desc = "NvimTreeFindFile" },
   { "<leader>nh", "<cmd>nohlsearch<cr>", desc = "nohlsearch" },
   { "<leader>nt", "<cmd>NvimTreeToggle<cr>", desc = "NvimTree" },
+  { "<leader>s", group = "test running" },
+  { "<leader>st",
+    function()
+      neotest = require('neotest')
+      neotest.run.run()
+      neotest.summary.open()
+    end,
+    desc = "Run the closest test to the cursor" },
+  { "<leader>ss",
+    function()
+      neotest = require('neotest')
+      neotest.run.run(vim.fn.expand('%'))
+      neotest.summary.open()
+    end,
+    desc = "Run the tests for the whole file" },
+  { "<leader>sv",
+    function()
+      neotest = require('neotest')
+      neotest.summary.toggle()
+    end,
+  desc = "Run the tests for the whole file" },
+  { "<leader>ws", "<cmd>StripWhitespace<cr>", desc = "Strip trailing whitespace" },
 })
