@@ -176,7 +176,8 @@ format_on_save.setup({
 vim.cmd[[colorscheme tokyonight-night]]
 
 require('lint').linters_by_ft = {
-  go = {'golangcilint',}
+  go = {'golangcilint',},
+  ruby = {'ruby'}
 }
 
 vim.api.nvim_create_autocmd({ "BufModifiedSet", "BufEnter" }, {
@@ -225,6 +226,16 @@ require("neotest").setup({
   },
 })
 
+require("conform").setup({
+  format_on_save = {
+    -- These options will be passed to conform.format()
+    timeout_ms = 500,
+    lsp_format = "fallback",
+  },
+  formatters_by_ft = {
+    ruby = { "rubyfmt" },
+  },
+})
 -- Set up and document custom keymaps
 local wk = require("which-key")
 wk.add({
