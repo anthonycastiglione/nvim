@@ -1,4 +1,5 @@
 return {
-  "williamboman/mason.nvim"
+  "williamboman/mason.nvim",
+  "WhoIsSethDaniel/mason-tool-installer.nvim"
 }
 
