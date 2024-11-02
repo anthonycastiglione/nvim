@@ -91,12 +91,23 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'luasnip' }, -- For luasnip users.
     { name = 'treesitter' },
+    { name = 'buffer' },
+    { name = 'path' },
   })
 })
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+
+
+require('lspconfig')['elixirls'].setup {
+  -- you need to specify the executable command mannualy for elixir-ls
+  cmd = { "/home/ferret/.local/share/nvim/mason/bin/elixir-ls" },
+  -- set default capabilities for cmp lsp completion source
+  capabilities = capabilities
+}
+
 require('lspconfig')['gopls'].setup {
   cmd = {'gopls'},
   -- on_attach = on_attach,
@@ -125,7 +136,7 @@ vim.cmd [[ hi PmenuSel guibg=#2f394f ]]
 
 -- Extra syntax highlighting
 require('nvim-treesitter.configs').setup({
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "ruby", "go" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "ruby", "go", "elixir", "erlang", "eex", "heex" },
   highlight = {
     enable = true,
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -248,6 +259,7 @@ require('mason-tool-installer').setup {
     'rubyfmt',
     'shfmt',
     'stylua',
+    'elixir-ls',
   },
 
   -- if set to true this will check each tool for updates. If updates
